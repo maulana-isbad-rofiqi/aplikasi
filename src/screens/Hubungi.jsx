@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, Linking, StyleSheet } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Hubungi() {
   const sendEmail = () => {
@@ -19,18 +20,58 @@ export default function Hubungi() {
   };
 
   return (
-    <View>
-      <Text style={{ color: 'black', fontWeight: 'bold' }}>Selamat Datang di Menu Hubungi</Text>
-      <Text style={{ marginTop: 10, color: 'black', fontWeight: 'bold' }}>Silahkan konsultasikan masalah Anda melalui tombol di bawah ini:</Text>
-      <TouchableOpacity style={{ padding: 10, backgroundColor: 'blue', marginTop: 10 }} onPress={callNumber}>
-        <Text style={{ color: 'white', textAlign: 'center' }}>Hubungi melalui Telepon</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Hubungi Kami</Text>
+      <Text style={styles.subtitle}>Silakan pilih salah satu metode berikut untuk menghubungi kami:</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#1e90ff' }]} onPress={callNumber}>
+        <MaterialCommunityIcons name="phone" size={24} color="white" />
+        <Text style={styles.buttonText}>Telepon</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{ padding: 10, backgroundColor: 'green', marginTop: 10 }} onPress={openWhatsApp}>
-        <Text style={{ color: 'white', textAlign: 'center' }}>Hubungi melalui WhatsApp</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#25D366' }]} onPress={openWhatsApp}>
+        <MaterialCommunityIcons name="whatsapp" size={24} color="white" />
+        <Text style={styles.buttonText}>WhatsApp</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{ padding: 10, backgroundColor: 'orange', marginTop: 10 }} onPress={sendEmail}>
-        <Text style={{ color: 'white', textAlign: 'center' }}>Hubungi melalui Email</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#FFA500' }]} onPress={sendEmail}>
+        <MaterialCommunityIcons name="email" size={24} color="white" />
+        <Text style={styles.buttonText}>Email</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#666',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  buttonText: {
+    marginLeft: 10,
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});

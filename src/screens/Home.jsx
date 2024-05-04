@@ -1,7 +1,16 @@
-import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Linking, Animated } from 'react-native';
+import React, { useRef } from 'react';
 
 const Home = () => {
+  const floatAnim = useRef(new Animated.Value(0)).current;
+
+  const floatAnimation = () => {
+    Animated.timing(floatAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const sendMessage = () => {
     let phoneNumber = '6287751669434';
@@ -11,8 +20,27 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Selamat Datang di PT. NGAPBHER</Text>
-      <TouchableOpacity style={styles.button} onPress={sendMessage}>
+      <Text style={styles.title}>Selamat Datang di</Text>
+      <Animated.Text
+        style={[
+          styles.title,
+          {
+            color: '#1e90ff',
+            fontSize: 40,
+            transform: [
+              {
+                translateY: floatAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, -20],
+                }),
+              },
+            ],
+          },
+        ]}
+      >
+        PT. NGAPBHER
+      </Animated.Text>
+      <TouchableOpacity style={styles.button} onPress={() => {sendMessage(); floatAnimation();}}>
         <Text style={styles.buttonText}>Tanyakan Promo Tiket Umroh & Haji</Text>
       </TouchableOpacity>
     </View>
@@ -30,17 +58,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: 'center',
-    color: 'black',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
   },
   button: {
     backgroundColor: '#1e90ff',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 5,
+    marginTop: 20,
   },
   buttonText: {
     color: 'white',

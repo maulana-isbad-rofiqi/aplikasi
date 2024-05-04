@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -12,6 +12,27 @@ import Pesanan from './screens/Pesanan';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
+
+function WelcomeScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground 
+        source={{uri: 'https://images.unsplash.com/photo-1569171699744-efaf706b86bc'}}
+        style={styles.backgroundImage}
+        imageStyle={styles.imageStyle}>
+        <Text style={styles.title}>Selamat Datang!</Text>
+        <TouchableOpacity
+          style={styles.getStartedButton}
+          onPress={() => navigation.navigate('MyTabs')}
+        >
+          <Text style={styles.getStartedText}>Mulai</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    </View>
+  );
+}
 
 function MyTabs() {
   return (
@@ -53,7 +74,7 @@ function MyTabs() {
           tabBarLabel: 'Hubungi',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="card-account-phone"
+              name="phone"
               color={color}
               size={26}
             />
@@ -69,22 +90,14 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="PT. NGAPBHER"
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyTabs"
           component={MyTabs}
-          options={({ navigation }) => ({
-            headerRight: () => (
-              <TouchableOpacity
-                style={styles.pesananButton}
-                onPress={() => navigation.navigate('Pesanan')}
-              >
-                <MaterialCommunityIcons
-                  name="cart-outline"
-                  color="#FFF"
-                  size={26}
-                />
-              </TouchableOpacity>
-            ),
-          })}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Pesanan"
@@ -97,11 +110,41 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-  pesananButton: {
-    marginRight: 16,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageStyle: {
+    resizeMode: 'cover',
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#fff', 
+    marginBottom: 20,
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
+  },
+  getStartedButton: {
     backgroundColor: '#1e90ff',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
     borderRadius: 30,
-    padding: 10,
+    marginTop: 20,
+  },
+  getStartedText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

@@ -11,9 +11,20 @@ export default function Pesanan() {
   const [alamat, setAlamat] = useState('');
   const [nomorHP, setNomorHP] = useState('');
   const [voucher, setVoucher] = useState('');
+  const [jumlahPesanan, setJumlahPesanan] = useState(0);
+  const [totalHarga, setTotalHarga] = useState(0);
 
   const pesan = () => {
     console.log('Pesan sekarang');
+  };
+
+  const hitungHarga = () => {
+    let hargaTotal = parseFloat(paket.harga.replace('Rp. ', '').replace('.', '')) * jumlahPesanan;
+    if (voucher.toLowerCase() === 'itsbad') {
+      hargaTotal -= hargaTotal * 0.1;
+    }
+
+    setTotalHarga(hargaTotal);
   };
 
   return (
@@ -21,11 +32,20 @@ export default function Pesanan() {
       <Text style={[styles.label, styles.blackText]}>Detail Pesanan:</Text>
       <View style={styles.detailContainer}>
         <Text style={[styles.label, styles.blackText]}>Nama Paket:</Text>
-        <Text style={[styles.detailText, styles.blackText, styles.blueBackground]}>{paket.nama}</Text>
+        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>{paket.nama}</Text>
       </View>
       <View style={styles.detailContainer}>
-        <Text style={[styles.label, styles.blackText]}>Harga:</Text>
-        <Text style={[styles.detailText, styles.blackText, styles.blueBackground]}>{paket.harga}</Text>
+        <Text style={[styles.label, styles.blackText]}>Harga Paket:</Text>
+        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>{paket.harga}</Text>
+      </View>
+      <View style={styles.detailContainer}>
+        <Text style={[styles.label, styles.blackText]}>Jumlah:</Text>
+        <TextInput
+          style={[styles.input, styles.blackText]}
+          value={jumlahPesanan.toString()}
+          onChangeText={(text) => setJumlahPesanan(parseInt(text) || 0)}
+          keyboardType="numeric"
+        />
       </View>
       <View style={styles.inputContainer}>
         <Text style={[styles.label, styles.blackText]}>Nama:</Text>
@@ -66,6 +86,15 @@ export default function Pesanan() {
       </View>
       <TouchableOpacity
         style={styles.button}
+        onPress={hitungHarga}>
+        <Text style={styles.buttonText}>Hitung</Text>
+      </TouchableOpacity>
+      <View style={styles.detailContainer}>
+        <Text style={[styles.label, styles.blackText]}>Total Harga:</Text>
+        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>Rp. {totalHarga}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.button}
         onPress={pesan}>
         <Text style={styles.buttonText}>Pesan</Text>
       </TouchableOpacity>
@@ -78,49 +107,54 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
   },
   label: {
     fontWeight: 'bold',
-    marginRight: 10,
+    marginRight: 5,
   },
   detailContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   detailText: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   blackText: {
     color: 'black',
   },
+  whiteText: {
+    color: 'white',
+  },
   blueBackground: {
     backgroundColor: 'blue',
-    padding: 5,
-    borderRadius: 5,
+    padding: 3,
+    borderRadius: 3,
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
+    padding: 5,
+    marginBottom: 5,
     width: '100%',
   },
   button: {
     backgroundColor: 'blue',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 3,
+    marginBottom: 10,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
