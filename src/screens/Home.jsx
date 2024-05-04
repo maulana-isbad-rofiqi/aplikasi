@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Selamat Datang di Aplikasi Travel</Text>
+      <Text style={styles.title}>Selamat Datang di PT. NGAPBHER</Text>
       <TouchableOpacity style={styles.button} onPress={sendMessage}>
         <Text style={styles.buttonText}>Tanyakan Promo Tiket Umroh & Haji</Text>
       </TouchableOpacity>

@@ -69,7 +69,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="PT. NGAPPHER"
+          name="PT. NGAPBHER"
           component={MyTabs}
           options={({ navigation }) => ({
             headerRight: () => (
