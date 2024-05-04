@@ -14,7 +14,7 @@ export default function Hubungi() {
 
   const openWhatsApp = () => {
     let phoneNumber = '6287751669434';
-    let message = encodeURIComponent("Assalamu'alaikum"); // Encode the message
+    let message = encodeURIComponent("Assalamu'alaikum");
     Linking.openURL(`whatsapp://send?phone=${phoneNumber}&text=${message}`);
   };
 

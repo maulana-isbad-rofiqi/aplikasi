@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#f0f0f0', // Ubah warna latar belakang di sini jika perlu
+    backgroundColor: '#f0f0f0',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: 'black', // Mengubah warna teks menjadi hitam
+    color: 'black',
   },
   button: {
     backgroundColor: '#1e90ff',

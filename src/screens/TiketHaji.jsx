@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import { useNavigation } from '@react-navigation/native';
 
 export default function TiketHaji() {
   const paketTiketHaji = [
@@ -9,11 +9,11 @@ export default function TiketHaji() {
     { nama: 'Paket Haji Gold', harga: 'Rp. 40.000.000' },
   ];
 
-  const navigation = useNavigation(); // Initialize navigation
+  const navigation = useNavigation();
 
   const pesanSekarang = (paket) => {
     console.log(`Anda memesan paket ${paket.nama} dengan harga ${paket.harga}`);
-    navigation.navigate('Pesanan', { paket }); // Navigate to Pesanan screen with package detail
+    navigation.navigate('Pesanan', { paket });
   };
 
   return (
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
-    color: 'black', // Ubah warna teks menjadi hitam
+    color: 'black',
   },
   card: {
-    backgroundColor: '#e3f2fd', // Ubah warna latar belakang
+    backgroundColor: '#e3f2fd',
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   packageName: {
     fontWeight: 'bold',
     marginBottom: 5,
-    color: 'black', // Ubah warna teks menjadi hitam
+    color: 'black',
   },
   price: {
     marginBottom: 10,
-    color: 'black', // Ubah warna teks menjadi hitam
+    color: 'black',
   },
   button: {
     backgroundColor: 'blue',
