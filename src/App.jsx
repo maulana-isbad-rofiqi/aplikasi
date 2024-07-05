@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableOpacity } from 'react-native';
 import Home from './screens/Home';
 import TiketHaji from './screens/TiketHaji';
 import TiketUmroh from './screens/TiketUmroh';
@@ -29,6 +30,7 @@ function WelcomeScreen() {
         >
           <Text style={styles.getStartedText}>Mulai</Text>
         </TouchableOpacity>
+        <Text style={styles.copyRight}>© 2024 Maulana Isbad Rofiqi. Hak Cipta Dilindungi.</Text>
       </ImageBackground>
     </View>
   );
@@ -145,6 +147,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+  },
+  copyRight: {
+    marginTop: 20,
+    fontSize: 12,
+    color: '#666',
   },
 });
 

@@ -67,6 +67,7 @@ export default function TiketUmroh() {
           </Animated.View>
         </TouchableWithoutFeedback>
       ))}
+      <Text style={styles.copyRight}>© 2024 Maulana Isbad Rofiqi. Hak Cipta Dilindungi.</Text>
     </View>
   );
 }
@@ -127,5 +128,11 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  copyRight: {
+    marginTop: 20,
+    fontSize: 12,
+    color: '#666',
+    textAlign: 'center',
   },
 });

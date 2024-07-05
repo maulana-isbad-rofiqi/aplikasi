@@ -43,6 +43,7 @@ const Home = () => {
       <TouchableOpacity style={styles.button} onPress={() => {sendMessage(); floatAnimation();}}>
         <Text style={styles.buttonText}>Tanyakan Promo Tiket Umroh & Haji</Text>
       </TouchableOpacity>
+      <Text style={styles.copyRight}>© 2024 Maulana Isbad Rofiqi. Hak Cipta Dilindungi.</Text>
     </View>
   );
 };
@@ -77,5 +78,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  copyRight: {
+    marginTop: 20,
+    fontSize: 12,
+    color: '#666',
   },
 });

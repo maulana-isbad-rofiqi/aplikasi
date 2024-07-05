@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 export default function Pesanan() {
   const route = useRoute();
-  const navigation = useNavigation();
   const { paket } = route.params;
 
   const [nama, setNama] = useState('');
@@ -28,133 +27,102 @@ export default function Pesanan() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.label, styles.blackText]}>Detail Pesanan:</Text>
-      <View style={styles.detailContainer}>
-        <Text style={[styles.label, styles.blackText]}>Nama Paket:</Text>
-        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>{paket.nama}</Text>
-      </View>
-      <View style={styles.detailContainer}>
-        <Text style={[styles.label, styles.blackText]}>Harga Paket:</Text>
-        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>{paket.harga}</Text>
-      </View>
-      <View style={styles.detailContainer}>
-        <Text style={[styles.label, styles.blackText]}>Jumlah:</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.card}>
+        <Text style={[styles.label, styles.boldText, styles.whiteText]}>Detail Pesanan:</Text>
+        <Text style={[styles.detailText, styles.whiteText]}>Nama Paket: {paket.nama}</Text>
+        <Text style={[styles.detailText, styles.whiteText]}>Harga Paket: {paket.harga}</Text>
         <TextInput
-          style={[styles.input, styles.blackText]}
+          style={[styles.input, styles.whiteText]}
           value={jumlahPesanan.toString()}
           onChangeText={(text) => setJumlahPesanan(parseInt(text) || 0)}
           keyboardType="numeric"
+          placeholder="Jumlah Pesanan"
         />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, styles.blackText]}>Nama:</Text>
         <TextInput
-          style={[styles.input, styles.blackText]}
+          style={[styles.input, styles.whiteText]}
           value={nama}
           onChangeText={setNama}
           placeholder="Nama"
         />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, styles.blackText]}>Alamat:</Text>
         <TextInput
-          style={[styles.input, styles.blackText]}
+          style={[styles.input, styles.whiteText]}
           value={alamat}
           onChangeText={setAlamat}
           placeholder="Alamat"
         />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, styles.blackText]}>Nomor HP:</Text>
         <TextInput
-          style={[styles.input, styles.blackText]}
+          style={[styles.input, styles.whiteText]}
           value={nomorHP}
           onChangeText={setNomorHP}
           placeholder="Nomor HP"
           keyboardType="phone-pad"
         />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, styles.blackText]}>Masukkan Kode Promo:</Text>
         <TextInput
-          style={[styles.input, styles.blackText]}
+          style={[styles.input, styles.whiteText]}
           value={voucher}
           onChangeText={setVoucher}
-          placeholder="Kode Promo"
+          placeholder="Masukkan Kode Promo"
         />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={hitungHarga}>
+          <Text style={[styles.buttonText, styles.whiteText]}>Hitung Total Harga</Text>
+        </TouchableOpacity>
+        <Text style={[styles.label, styles.boldText, styles.whiteText]}>Total Harga: Rp. {totalHarga}</Text>
+        <TouchableOpacity
+          style={[styles.button, { marginBottom: 20, backgroundColor: 'orange' }]}
+          onPress={pesan}>
+          <Text style={[styles.buttonText, styles.whiteText]}>Pesan Sekarang</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={hitungHarga}>
-        <Text style={styles.buttonText}>Hitung</Text>
-      </TouchableOpacity>
-      <View style={styles.detailContainer}>
-        <Text style={[styles.label, styles.blackText]}>Total Harga:</Text>
-        <Text style={[styles.detailText, styles.whiteText, styles.blueBackground]}>Rp. {totalHarga}</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={pesan}>
-        <Text style={styles.buttonText}>Pesan</Text>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
     backgroundColor: '#f0f0f0',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  card: {
+    backgroundColor: '#333',
+    borderRadius: 10,
+    padding: 20,
+    elevation: 3,
   },
   label: {
-    fontWeight: 'bold',
-    marginRight: 5,
+    marginBottom: 10,
   },
-  detailContainer: {
-    flexDirection: 'row',
-    marginBottom: 5,
+  boldText: {
+    fontWeight: 'bold',
   },
   detailText: {
-    marginBottom: 5,
-  },
-  blackText: {
-    color: 'black',
+    marginBottom: 10,
+    fontSize: 16,
   },
   whiteText: {
     color: 'white',
   },
-  blueBackground: {
-    backgroundColor: 'blue',
-    padding: 3,
-    borderRadius: 3,
-  },
-  inputContainer: {
-    width: '100%',
-    marginBottom: 10,
-  },
   input: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'white',
     borderRadius: 5,
-    padding: 5,
-    marginBottom: 5,
-    width: '100%',
+    padding: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: 'blue',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 3,
+    borderRadius: 5,
+    paddingVertical: 15,
+    alignItems: 'center',
     marginBottom: 10,
   },
   buttonText: {
-    color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 14,
+    fontSize: 16,
   },
 });

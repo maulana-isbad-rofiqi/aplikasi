@@ -35,6 +35,7 @@ export default function Hubungi() {
         <MaterialCommunityIcons name="email" size={24} color="white" />
         <Text style={styles.buttonText}>Email</Text>
       </TouchableOpacity>
+      <Text style={styles.copyRight}>© 2024 Maulana Isbad Rofiqi. Hak Cipta Dilindungi.</Text>
     </View>
   );
 }
@@ -73,5 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     fontWeight: 'bold',
+  },
+  copyRight: {
+    marginTop: 20,
+    fontSize: 12,
+    color: '#666',
   },
 });
