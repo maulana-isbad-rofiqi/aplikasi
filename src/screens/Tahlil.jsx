@@ -71,7 +71,7 @@ const Tahlil = () => {
 const styles = StyleSheet.create({
   lightContainer: {
     flexGrow: 1,
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#fff',
     padding: 16,
   },
   darkContainer: {
