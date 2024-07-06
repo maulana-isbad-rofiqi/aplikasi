@@ -5,7 +5,6 @@ import Tahlil from './screens/Tahlil';
 import Doa from './screens/Doa';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
 const App = () => {
   const [screen, setScreen] = useState('home');
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -22,7 +21,7 @@ const App = () => {
             <TouchableOpacity style={styles.backButton} onPress={() => setScreen('home')}>
               <Icon name="arrow-back" size={24} color={isDarkMode ? "#ffffff" : "#000000"} />
             </TouchableOpacity>
-            <Yasin />
+            <Yasin isDarkMode={isDarkMode} />
           </View>
         );
       case 'Tahlil':
@@ -31,7 +30,7 @@ const App = () => {
             <TouchableOpacity style={styles.backButton} onPress={() => setScreen('home')}>
               <Icon name="arrow-back" size={24} color={isDarkMode ? "#ffffff" : "#000000"} />
             </TouchableOpacity>
-            <Tahlil />
+            <Tahlil isDarkMode={isDarkMode} />
           </View>
         );
       case 'Doa':
@@ -40,7 +39,7 @@ const App = () => {
             <TouchableOpacity style={styles.backButton} onPress={() => setScreen('home')}>
               <Icon name="arrow-back" size={24} color={isDarkMode ? "#ffffff" : "#000000"} />
             </TouchableOpacity>
-            <Doa />
+            <Doa isDarkMode={isDarkMode} />
           </View>
         );
       case 'home':
@@ -61,7 +60,7 @@ const App = () => {
               <Text style={styles.buttonText}>Doa</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.toggleButton} onPress={toggleDarkMode}>
-              <Icon name={isDarkMode ? "sunny" : "moon"} size={24} color={isDarkMode ? "#ffffff" : "#000000"} />
+              <Text style={styles.toggleButtonText}>{isDarkMode ? '🌞' : '🌙'}</Text>
             </TouchableOpacity>
           </ScrollView>
         );
@@ -74,7 +73,6 @@ const App = () => {
     </View>
   );
 };
-
 
 const DigitalClock = ({ isDarkMode }) => {
   const [time, setTime] = useState(new Date());
@@ -213,11 +211,9 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     padding: 8,
-  
   },
   toggleButtonText: {
-    color: '#ffffff',
-    fontSize: 20,
+    fontSize: 24,
   },
 });
 

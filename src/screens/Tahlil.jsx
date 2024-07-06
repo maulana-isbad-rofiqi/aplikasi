@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 const tahlilText = "Tahlil adalah sebuah amalan yang dilakukan dengan mengucapkan kalimat ‘Laa ilaaha illallaah’ (Tiada Tuhan selain Allah). Amalan ini memiliki banyak manfaat dan keutamaan dalam agama Islam. Tahlil sering dibaca dalam berbagai kesempatan, baik dalam doa sehari-hari maupun dalam acara-acara keagamaan.";
 
@@ -41,17 +41,26 @@ const ayats = [
 ];
 
 const Tahlil = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={isDarkMode ? styles.darkContainer : styles.lightContainer}>
       <View style={styles.header}>
-        <Text style={styles.title}>Tahlil</Text>
-        <Text style={styles.description}>{tahlilText}</Text>
+        <Text style={isDarkMode ? styles.darkTitle : styles.lightTitle}>Tahlil</Text>
+        <Text style={isDarkMode ? styles.darkDescription : styles.lightDescription}>{tahlilText}</Text>
+        <TouchableOpacity onPress={toggleTheme} style={styles.themeToggleButton}>
+          <Text style={styles.themeToggleText}>{isDarkMode ? '🌞' : '🌙'}</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.ayatContainer}>
         {ayats.map((ayat) => (
-          <View key={ayat.id} style={styles.ayatItem}>
-            <Text style={styles.ayatText}>{ayat.text}</Text>
-            <Text style={styles.translation}>{ayat.translation}</Text>
+          <View key={ayat.id} style={isDarkMode ? styles.darkAyatItem : styles.lightAyatItem}>
+            <Text style={isDarkMode ? styles.darkAyatText : styles.lightAyatText}>{ayat.text}</Text>
+            <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>
           </View>
         ))}
       </View>
@@ -60,41 +69,83 @@ const Tahlil = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  lightContainer: {
     flexGrow: 1,
     backgroundColor: '#f0f8ff',
+    padding: 16,
+  },
+  darkContainer: {
+    flexGrow: 1,
+    backgroundColor: '#333',
     padding: 16,
   },
   header: {
     alignItems: 'center',
     marginBottom: 16,
+    position: 'relative',
   },
-  title: {
+  lightTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 8,
   },
-  description: {
+  darkTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#F5F5F5',
+    marginBottom: 8,
+  },
+  lightDescription: {
     fontSize: 16,
     color: '#555',
     textAlign: 'center',
     marginHorizontal: 8,
   },
+  darkDescription: {
+    fontSize: 16,
+    color: '#DDD',
+    textAlign: 'center',
+    marginHorizontal: 8,
+  },
+  themeToggleButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    padding: 5,
+    borderRadius: 20,
+    backgroundColor: 'transparent',
+  },
+  themeToggleText: {
+    fontSize: 18,
+    color: '#007BFF',
+  },
   ayatContainer: {
     marginTop: 16,
   },
-  ayatItem: {
+  lightAyatItem: {
     marginBottom: 12,
   },
-  ayatText: {
+  darkAyatItem: {
+    marginBottom: 12,
+  },
+  lightAyatText: {
     fontSize: 25,
     fontWeight: 'bold',
     color: '#000',
   },
-  translation: {
+  darkAyatText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#F5F5F5',
+  },
+  lightTranslation: {
     fontSize: 16,
     color: '#555',
+  },
+  darkTranslation: {
+    fontSize: 16,
+    color: '#CCC',
   },
 });
 

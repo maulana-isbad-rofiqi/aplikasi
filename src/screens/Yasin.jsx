@@ -1,6 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
-
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 const ayats = [
   { id: '1', text: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ', translation: 'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang' },
@@ -90,18 +89,28 @@ const ayats = [
 ];
 
 const SurahYasinScreen = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      
-      <Text style={styles.title}>Surah Yasin</Text>
-      <Text style={styles.subtitle}>Surah ke-36 dalam Al-Qur'an</Text>
-      <Text style={styles.description}>
-        Surah Yasin adalah surah ke-36 dalam Al-Qur'an yang dikenal sebagai "Jantung Al-Qur'an". Surah ini mengandung banyak ajaran dan hikmah yang sangat penting bagi umat Islam.
-      </Text>
+    <ScrollView contentContainerStyle={isDarkMode ? styles.darkContainer : styles.lightContainer}>
+      <View style={styles.headerContainer}>
+        <Text style={isDarkMode ? styles.darkTitle : styles.lightTitle}>Surah Yasin</Text>
+        <Text style={isDarkMode ? styles.darkSubtitle : styles.lightSubtitle}>Surah ke-36 dalam Al-Qur'an</Text>
+        <Text style={isDarkMode ? styles.darkDescription : styles.lightDescription}>
+          Surah Yasin adalah surah ke-36 dalam Al-Qur'an yang dikenal sebagai "Jantung Al-Qur'an". Surah ini mengandung banyak ajaran dan hikmah yang sangat penting bagi umat Islam.
+        </Text>
+        <TouchableOpacity onPress={toggleTheme} style={styles.themeToggleButton}>
+          <Text style={styles.themeToggleText}>{isDarkMode ? '🌞' : '🌙'}</Text>
+        </TouchableOpacity>
+      </View>
       {ayats.map((ayat) => (
-        <View key={ayat.id} style={styles.ayatContainer}>
-          <Text style={styles.ayatText}>{ayat.text}</Text>
-          <Text style={styles.translation}>{ayat.translation}</Text>
+        <View key={ayat.id} style={isDarkMode ? styles.darkAyatContainer : styles.lightAyatContainer}>
+          <Text style={isDarkMode ? styles.darkAyatText : styles.lightAyatText}>{ayat.text}</Text>
+          <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>
         </View>
       ))}
     </ScrollView>
@@ -109,35 +118,68 @@ const SurahYasinScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  lightContainer: {
     flexGrow: 1,
     padding: 10,
     backgroundColor: '#f5f5f5',
   },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 10,
+  darkContainer: {
+    flexGrow: 1,
+    padding: 10,
+    backgroundColor: '#333',
   },
-  title: {
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    position: 'relative',
+  },
+  lightTitle: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 5,
   },
-  subtitle: {
+  darkTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#F5F5F5',
+    marginBottom: 5,
+  },
+  lightSubtitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#666',
     marginBottom: 10,
   },
-  description: {
+  darkSubtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#AAA',
+    marginBottom: 10,
+  },
+  lightDescription: {
     fontSize: 16,
     color: '#444',
     marginBottom: 15,
   },
-  ayatContainer: {
+  darkDescription: {
+    fontSize: 16,
+    color: '#DDD',
+    marginBottom: 15,
+  },
+  themeToggleButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    padding: 5,
+    borderRadius: 20,
+    backgroundColor: 'transparent',
+  },
+  themeToggleText: {
+    fontSize: 18,
+    color: '#007BFF',
+  },
+  lightAyatContainer: {
     marginBottom: 10,
     padding: 10,
     backgroundColor: '#fff',
@@ -148,14 +190,35 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
   },
-  ayatText: {
+  darkAyatContainer: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#444',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  lightAyatText: {
     fontSize: 25,
     fontWeight: 'bold',
     color: '#000',
   },
-  translation: {
+  darkAyatText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#F5F5F5',
+  },
+  lightTranslation: {
     fontSize: 14,
     color: '#555',
+    marginTop: 5,
+  },
+  darkTranslation: {
+    fontSize: 14,
+    color: '#CCC',
     marginTop: 5,
   },
 });
