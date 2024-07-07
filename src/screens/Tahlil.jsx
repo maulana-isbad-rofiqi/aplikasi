@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, Modal } from 'react-native';
 
 const tahlilText = "Tahlil adalah sebuah amalan yang dilakukan dengan mengucapkan kalimat ‘Laa ilaaha illallaah’ (Tiada Tuhan selain Allah). Amalan ini memiliki banyak manfaat dan keutamaan dalam agama Islam. Tahlil sering dibaca dalam berbagai kesempatan, baik dalam doa sehari-hari maupun dalam acara-acara keagamaan.";
 
@@ -42,47 +42,114 @@ const ayats = [
 
 const Tahlil = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(true);
+  const [tasbihCount, setTasbihCount] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const toggleTranslation = () => {
+    setShowTranslation(!showTranslation);
+  };
+
+  const incrementTasbih = () => {
+    setTasbihCount(tasbihCount + 1);
+  };
+
+  const resetTasbih = () => {
+    setTasbihCount(0);
+    hideModal();
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <ScrollView contentContainerStyle={isDarkMode ? styles.darkContainer : styles.lightContainer}>
-      <View style={styles.header}>
-        <Text style={isDarkMode ? styles.darkTitle : styles.lightTitle}>Tahlil</Text>
-        <Text style={isDarkMode ? styles.darkDescription : styles.lightDescription}>{tahlilText}</Text>
-        <TouchableOpacity onPress={toggleTheme} style={styles.themeToggleButton}>
-          <Text style={styles.themeToggleText}>{isDarkMode ? '🌞' : '🌙'}</Text>
+    <View style={isDarkMode ? styles.darkContainer : styles.lightContainer}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.header}>
+          <Text style={isDarkMode ? styles.darkTitle : styles.lightTitle}>Tahlil</Text>
+          <Text style={isDarkMode ? styles.darkDescription : styles.lightDescription}>{tahlilText}</Text>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity onPress={toggleTranslation} style={styles.toggleButton}>
+              <Text style={styles.toggleButtonText}>{showTranslation ? '👁️' : '🙈'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleTheme} style={styles.toggleButton}>
+              <Text style={styles.toggleButtonText}>{isDarkMode ? '🌞' : '🌙'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.ayatContainer}>
+          {ayats.map((ayat) => (
+            <View key={ayat.id} style={isDarkMode ? styles.darkAyatItem : styles.lightAyatItem}>
+              <Text style={isDarkMode ? styles.darkAyatText : styles.lightAyatText}>{ayat.text}</Text>
+              {showTranslation && <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+      {}
+      <View style={styles.footer}>
+        <TouchableOpacity onPress={showModal} style={styles.footerButton}>
+          <Image source={require('../assets/images/reset.png')} style={styles.footerImage} />
+        </TouchableOpacity>
+        <Text style={[styles.tasbihCount, { color: isDarkMode ? '#F5F5F5' : '#333' }]}>{tasbihCount}</Text>
+        <TouchableOpacity onPress={incrementTasbih} style={styles.tasbihButton}>
+          <Image source={require('../assets/images/tasbih.png')} style={styles.tasbihImage} />
         </TouchableOpacity>
       </View>
-      <View style={styles.ayatContainer}>
-        {ayats.map((ayat) => (
-          <View key={ayat.id} style={isDarkMode ? styles.darkAyatItem : styles.lightAyatItem}>
-            <Text style={isDarkMode ? styles.darkAyatText : styles.lightAyatText}>{ayat.text}</Text>
-            <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>
+      {}
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={hideModal}
+        animationType="fade"
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Konfirmasi Reset</Text>
+            <Text style={styles.modalText}>Apakah Anda yakin ingin mereset jumlah tasbih?</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity onPress={resetTasbih} style={[styles.modalButton, styles.resetButton]}>
+                <Text style={styles.modalButtonText}>Reset Tasbih</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={hideModal} style={[styles.modalButton, styles.cancelButton]}>
+                <Text style={styles.modalButtonText}>Batal</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        ))}
-      </View>
-    </ScrollView>
+        </View>
+      </Modal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   lightContainer: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: '#fff',
     padding: 16,
   },
   darkContainer: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: '#333',
     padding: 16,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
   },
   header: {
     alignItems: 'center',
     marginBottom: 16,
     position: 'relative',
+    backgroundColor: 'transparent',
   },
   lightTitle: {
     fontSize: 28,
@@ -108,15 +175,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 8,
   },
-  themeToggleButton: {
+  headerButtons: {
     position: 'absolute',
     top: 10,
     right: 10,
+    flexDirection: 'row',
+  },
+  toggleButton: {
+    marginLeft: 10,
     padding: 5,
     borderRadius: 20,
     backgroundColor: 'transparent',
   },
-  themeToggleText: {
+  toggleButtonText: {
     fontSize: 18,
     color: '#007BFF',
   },
@@ -146,6 +217,87 @@ const styles = StyleSheet.create({
   darkTranslation: {
     fontSize: 16,
     color: '#CCC',
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    backgroundColor: 'transparent',
+  },
+  footerButton: {
+    backgroundColor: 'transparent',
+    padding: 8,
+  },
+  footerImage: {
+    width: 24,
+    height: 24,
+  },
+  tasbihButton: {
+    backgroundColor: 'transparent',
+    padding: 8,
+  },
+  tasbihCount: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginHorizontal: 12,
+  },
+  tasbihImage: {
+    width: 24,
+    height: 24,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#FFF',
+    padding: 24,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 12,
+  },
+  modalText: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    marginTop: 8,
+  },
+  modalButton: {
+    padding: 12,
+    borderRadius: 5,
+    marginHorizontal: 8,
+    width: 120,
+    alignItems: 'center',
+  },
+  resetButton: {
+    backgroundColor: '#FF4D4D',
+  },
+  cancelButton: {
+    backgroundColor: '#007BFF',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

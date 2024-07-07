@@ -85,14 +85,18 @@ const ayats = [
   { id: '81', text: 'ࣙالَّذِيْ جَعَلَ لَكُمْ مِّنَ الشَّجَرِ الْاَخْضَرِ نَارًاۙ فَاِذَآ اَنْتُمْ مِّنْهُ تُوْقِدُوْنَ ۝٨٠', translation: '(Dialah) yang menjadikan api untukmu dari kayu yang hijau. Kemudian, seketika itu kamu menyalakan (api) darinya.”' },
   { id: '82', text: 'اَوَلَيْسَ الَّذِيْ خَلَقَ السَّمٰوٰتِ وَالْاَرْضَ بِقٰدِرٍ عَلٰٓى اَنْ يَّخْلُقَ مِثْلَهُمْۗ بَلٰى وَهُوَ الْخَلّٰقُ الْعَلِيْمُ ۝٨١', translation: 'Bukankah Zat yang menciptakan langit dan bumi mampu menciptakan manusia yang serupa mereka itu (di akhirat kelak)? Benar. Dialah yang Maha Banyak Mencipta lagi Maha Mengetahui.' },
   { id: '83', text: 'اِنَّمَآ اَمْرُهٗٓ اِذَآ اَرَادَ شَيْـًٔاۖ اَنْ يَّقُوْلَ لَهٗ كُنْ فَيَكُوْنُ ۝٨٢', translation: 'Sesungguhnya ketetapan-Nya, jika Dia menghendaki sesuatu, Dia hanya berkata kepadanya, “Jadilah!” Maka, jadilah (sesuatu) itu.' },
-  { id: '84', text: 'فَسُبْحٰنَ الَّذِيْ بِيَدِهٖ مَلَكُوْتُ كُلِّ شَيْءٍ وَّاِلَيْهِ تُرْجَعُوْنَ ۝٨٣', translation: 'Maka, Mahasuci (Allah) yang di tangan-Nya kekuasaan atas segala sesuatu dan kepada-Nya kamu dikembalikan.' },
-];
+  { id: '84', text: 'فَسُبْحٰنَ الَّذِيْ بِيَدِهٖ مَلَكُوْتُ كُلِّ شَيْءٍ وَّاِلَيْهِ تُرْجَعُوْنَ ۝٨٣', translation: 'Maka, Mahasuci (Allah) yang di tangan-Nya kekuasaan atas segala sesuatu dan kepada-Nya kamu dikembalikan.' },];
 
 const SurahYasinScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(true);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const toggleTranslation = () => {
+    setShowTranslation(!showTranslation);
   };
 
   return (
@@ -103,14 +107,19 @@ const SurahYasinScreen = () => {
         <Text style={isDarkMode ? styles.darkDescription : styles.lightDescription}>
           Surah Yasin adalah surah ke-36 dalam Al-Qur'an yang dikenal sebagai "Jantung Al-Qur'an". Surah ini mengandung banyak ajaran dan hikmah yang sangat penting bagi umat Islam.
         </Text>
-        <TouchableOpacity onPress={toggleTheme} style={styles.themeToggleButton}>
-          <Text style={styles.themeToggleText}>{isDarkMode ? '🌞' : '🌙'}</Text>
-        </TouchableOpacity>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity onPress={toggleTranslation} style={styles.toggleButton}>
+            <Text style={styles.toggleButtonText}>{showTranslation ? '👁️' : '🙈'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleTheme} style={styles.toggleButton}>
+            <Text style={styles.toggleButtonText}>{isDarkMode ? '🌞' : '🌙'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {ayats.map((ayat) => (
         <View key={ayat.id} style={isDarkMode ? styles.darkAyatContainer : styles.lightAyatContainer}>
           <Text style={isDarkMode ? styles.darkAyatText : styles.lightAyatText}>{ayat.text}</Text>
-          <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>
+          {showTranslation && <Text style={isDarkMode ? styles.darkTranslation : styles.lightTranslation}>{ayat.translation}</Text>}
         </View>
       ))}
     </ScrollView>
@@ -167,15 +176,19 @@ const styles = StyleSheet.create({
     color: '#DDD',
     marginBottom: 15,
   },
-  themeToggleButton: {
+  headerButtons: {
     position: 'absolute',
     top: 10,
     right: 10,
+    flexDirection: 'row',
+  },
+  toggleButton: {
+    marginLeft: 10,
     padding: 5,
     borderRadius: 20,
     backgroundColor: 'transparent',
   },
-  themeToggleText: {
+  toggleButtonText: {
     fontSize: 18,
     color: '#007BFF',
   },
